@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register</title>
+  <link rel="stylesheet" href="bootstrap.min.css">
+  <link rel="stylesheet" href="all.min.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-10 col-xl-9 mx-auto">
+        <div class="card flex-row my-5 border-0 shadow rounded-3 overflow-hidden">
+          <div class="card-img-left d-none d-md-flex">
+            <!-- Background image for card set in CSS! -->
+          </div>
+          <div class="card-body p-4 p-sm-5">
+            <h5 class="card-title text-center mb-5 fw-light fs-5">Register</h5>
+            <form id="registerForm">
+
+              <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="floatingInputUsername" placeholder="myusername" required autofocus>
+                <label for="floatingInputUsername">Username</label>
+              </div>
+
+              <div class="form-floating mb-3">
+                <input type="email" class="form-control" id="floatingInputEmail" placeholder="name@example.com">
+                <label for="floatingInputEmail">Email address</label>
+              </div>
+
+              <hr>
+
+              <div class="form-floating mb-3">
+                <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                <label for="floatingPassword">Password</label>
+              </div>
+
+              <div class="form-floating mb-3">
+                <input type="password" class="form-control" id="floatingPasswordConfirm" placeholder="Confirm Password">
+                <label for="floatingPasswordConfirm">Confirm Password</label>
+              </div>
+
+              <div class="d-grid mb-2">
+                <button class="btn btn-lg btn-primary btn-login fw-bold text-uppercase" type="submit">Register</button>
+              </div>
+
+              <a class="d-block text-center mt-2 small" href="../Login/index.html">Sudah punya akun? Login</a>
+
+              <hr class="my-4">
+
+              <div class="d-grid mb-2">
+                <button class="btn btn-lg btn-google btn-login fw-bold text-uppercase" type="button" id="googleSignUp">
+                  <i class="fab fa-google me-2"></i> Sign up with Google
+                </button>
+              </div>
+
+              <div class="d-grid">
+                <button class="btn btn-lg btn-facebook btn-login fw-bold text-uppercase" type="button" id="facebookSignUp">
+                  <i class="fab fa-facebook-f me-2"></i> Sign up with Facebook
+                </button>
+              </div>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="bootstrap.bundle.min.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const registerForm = document.getElementById("registerForm");
+
+      // Tangani pendaftaran dengan Google
+      const googleSignUpButton = document.getElementById("googleSignUp");
+      googleSignUpButton.addEventListener("click", function() {
+        // Redirect ke halaman otentikasi Google
+        window.location.href = "https://accounts.google.com/o/oauth2/auth?response_type=token&client_id=YOUR_CLIENT_ID&redirect_uri=YOUR_REDIRECT_URI&scope=email%20profile&state=googleSignUp";
+      });
+
+      // Tangani pendaftaran dengan Facebook
+      const facebookSignUpButton = document.getElementById("facebookSignUp");
+      facebookSignUpButton.addEventListener("click", function() {
+        // Redirect ke halaman otentikasi Facebook
+        window.location.href = "https://www.facebook.com/v11.0/dialog/oauth?client_id=YOUR_CLIENT_ID&redirect_uri=YOUR_REDIRECT_URI&scope=email&state=facebookSignUp";
+      });
+
+      // Tangani pengiriman formulir pendaftaran
+      registerForm.addEventListener("submit", function(event) {
+        event.preventDefault(); // Menghentikan pengiriman formulir
+        
+        // Ambil nilai dari input
+        const username = document.getElementById("floatingInputUsername").value;
+        const email = document.getElementById("floatingInputEmail").value;
+        const password = document.getElementById("floatingPassword").value;
+        const confirmPassword = document.getElementById("floatingPasswordConfirm").value;
+
+        // Verifikasi bahwa password cocok
+        if (password !== confirmPassword) {
+          alert("Password and confirm password do not match.");
+          return;
+        }
+
+        // Simpan data registrasi ke local storage
+        const userData = {
+          username: username,
+          email: email,
+          password: password
+        };
+        localStorage.setItem("userData", JSON.stringify(userData));
+
+        // Tampilkan pesan bahwa registrasi berhasil
+        alert("Registration successful!");
+        
+        // Redirect ke halaman login setelah registrasi berhasil
+        window.location.href = "../Login/index.html";
+      });
+    });
+  </script>
+</body>
+</html>

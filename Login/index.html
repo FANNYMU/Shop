@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign In</title>
+  <link rel="stylesheet" href="bootstrap.min.css">
+  <link rel="stylesheet" href="all.min.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container-fluid ps-md-0">
+    <div class="row g-0">
+      <div class="d-none d-md-flex col-md-4 col-lg-6 bg-image"></div>
+      <div class="col-md-8 col-lg-6">
+        <div class="login d-flex align-items-center py-5">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-9 col-lg-8 mx-auto">
+                <h3 class="login-heading mb-4">Welcome back!</h3>
+
+                <!-- Sign In Form -->
+                <form id="loginForm">
+                  <div class="form-floating mb-3">
+                    <input type="email" class="form-control" id="emailInput" placeholder="name@example.com">
+                    <label for="emailInput">Email address</label>
+                  </div>
+                  <div class="form-floating mb-3">
+                    <input type="password" class="form-control" id="passwordInput" placeholder="Password">
+                    <label for="passwordInput">Password</label>
+                  </div>
+
+                  <div class="form-check mb-3">
+                    <input class="form-check-input" type="checkbox" value="" id="rememberPasswordCheck">
+                    <label class="form-check-label" for="rememberPasswordCheck">
+                      Remember password
+                    </label>
+                  </div>
+
+                  <div class="d-grid">
+                    <button class="btn btn-lg btn-primary btn-login text-uppercase fw-bold mb-2" type="submit">Sign in</button>
+                    <div class="text-center">
+                      <a class="small" href="../register/index.html">Belum punya akun? Register</a>
+                    </div>
+                  </div>
+
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="bootstrap.bundle.min.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const emailInput = document.getElementById("emailInput");
+      const passwordInput = document.getElementById("passwordInput");
+      const rememberPasswordCheck = document.getElementById("rememberPasswordCheck");
+      const loginForm = document.getElementById("loginForm");
+
+      // Tangani pengiriman formulir
+      loginForm.addEventListener("submit", function(event) {
+        event.preventDefault(); // Menghentikan pengiriman formulir
+
+        const email = emailInput.value;
+        const password = passwordInput.value;
+
+        // Mengambil data pendaftaran dari local storage
+        const userDataString = localStorage.getItem("userData");
+        if (!userDataString) {
+          alert("No registered users found. Please register first.");
+          return;
+        }
+
+        const userData = JSON.parse(userDataString);
+
+        // Memeriksa apakah email dan password cocok dengan data yang tersimpan
+        if (email === userData.email && password === userData.password) {
+          // Simpan email di local storage jika kotak centang diaktifkan
+          if (rememberPasswordCheck.checked) {
+            localStorage.setItem("rememberedEmail", email);
+          } else {
+            localStorage.removeItem("rememberedEmail");
+          }
+
+          // Redirect ke halaman konten atau tampilkan konten di halaman yang sama setelah login berhasil
+          window.location.href = "../index.html"; // Ganti "content.html" dengan halaman konten yang sesuai
+        } else {
+          alert("Invalid email or password. Please try again."); // Tampilkan pesan kesalahan jika kredensial tidak valid
+        }
+      });
+    });
+  </script>
+</body>
+</html>
